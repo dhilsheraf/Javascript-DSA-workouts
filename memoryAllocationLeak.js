@@ -16,3 +16,5 @@ function startTimer() {
     setInterval(() => console.log("Still running"), 1000);
 }
 startTimer(); // Timer runs forever unless explicitly cleared
+
+
