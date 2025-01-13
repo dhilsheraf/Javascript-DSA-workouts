@@ -59,3 +59,4 @@ const dll = new DoublyLinkedList();
 console.log(dll.isEmpty())
 dll.addItem(100);
 dll.display()
+

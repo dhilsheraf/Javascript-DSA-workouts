@@ -20,3 +20,17 @@ function sumOfNaturalNumbers(n){
     return n + sumOfNaturalNumbers(n-1)
 }
 console.log(sumOfNaturalNumbers(5))
+
+function binarySearch(arr,target, left = 0 , right = arr.length-1){
+    if(left > right ) return -1
+
+    let middle = Math.floor((left+right)/2)
+
+    if(arr[middle] == target)return middle
+
+    if(arr[middle] > target) return binarySearch(arr,target,left,mid -1)
+
+    return binarySearch(arr,target,mid+1,right)
+}
+
+console.log(binarySearch([1,2,3,4,5,6,7,8,9],5))

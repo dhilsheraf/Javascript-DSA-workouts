@@ -132,6 +132,27 @@ class LinkedList{
             curr = curr.next
         }
     }
+    middleElement(){
+        let fast = this.head
+        let slow = this.head
+        while(fast && fast.next){
+            fast = fast.next.next
+            slow = slow.next
+        }
+        return console.log(slow.value)
+    }
+    reverse(){
+        let curr = this.head 
+        let prev = null
+        let next = null
+        while(curr){
+            next = curr.next 
+            curr.next = prev
+            prev = curr
+            curr = next
+        }
+        this.head = prev
+    }
 }
 
 const ll = new LinkedList()
@@ -150,5 +171,7 @@ ll.print()
 ll.reversePrint()
 ll.print()
 ll.removeDuplicatesSorted()
-ll.reversePrint()
+ll.print()
+ll.middleElement()
+ll.reverse()
 ll.print()
