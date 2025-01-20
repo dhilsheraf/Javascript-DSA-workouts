@@ -13,7 +13,7 @@ class Stack{
         const newNode = new Node(value)
         newNode.next = this.top
         this.top = newNode
-        
+
     }
     pop(){
         if(this.isEmpty()){
@@ -33,8 +33,35 @@ class Stack{
     isEmpty(){
         return this.top == null
     }
+    printStack(){
+        let curr = this.top
+        let result = []
+
+        while(curr){
+            result.push(curr.value)
+            curr = curr.next
+        }
+        return result
+    }
 }
 
-const stack = new Stack ()
+// const stack = new Stack ()
+// console.log(stack.peek())
+// console.log(stack.printStack());
+// console.log(stack.isEmpty());
+// console.log(stack.pop());
+// console.log(stack.printStack());
+function reverseStack(str){
+    const stack = new Stack()
+    for(let i of str){
+        stack.push(i)
+    }
+    let reverseStr = ""
+    while(!stack.isEmpty()){
+        reverseStr += stack.pop()
+    }
+    return reverseStr
+}
+console.log(reverseStack("Hello Word"))
 
-console.log(stack.push('Hello bro'));
+

@@ -12,3 +12,20 @@ function quickSort(arr){
 }
 
 console.log(quickSort([1,23,1,41,421,421,-5,10,30]))
+
+//other without recursion
+
+function partition(arr,low,high){
+    let pivot = arr[high]
+
+    let i = low -1
+
+    for(let j = low ; j < high -1 ; j++ ){
+        if(arr[i] < pivot ){
+            i++
+            let temp = arr[i]
+            arr[i] = arr[j]
+            
+        }
+    }
+}

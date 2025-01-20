@@ -23,3 +23,5 @@ function merge(leftarr,rightarr){
 
 const arr = [8,20,-2,4,-6]
 console.log(mergeSort(arr))
+
+//other way
