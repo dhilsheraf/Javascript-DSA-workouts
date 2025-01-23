@@ -43,3 +43,4 @@ console.log(table.get("name"))
 table.display()
 table.remove("age")
 table.display()
+
