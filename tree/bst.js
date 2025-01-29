@@ -79,11 +79,23 @@ class BinarySearchTree {
             if (curr.left) {
                 queue.push(curr.left)
             }
-            if (curr.right) {
+            if (curr.right) {   
                 queue.push(curr.right)
             }
         }
     }
+    // levelOrder(){
+    //     if(this.root === null ) return []
+    //     let queue = [this.root]
+    //     const result = []
+    //     while(queue.length){
+    //         const node = queue.shift()
+    //         result.push(node.value)
+    //         if(node.left !== null ) queue.push(node.left)
+    //         if(node.right !== null ) queue.push(node.right)
+    //     }
+    // return result
+    // }
     min(root) {
         if (!root.left) {
             return root.value
@@ -149,6 +161,28 @@ class BinarySearchTree {
             this.checkBST(root.left,min,root.value) &&
             this.checkBST(root.right,root.value,max))
     }
+    secondLargest(){
+        if(!this.root ||(!this.root.left && !this.root.right) ){
+            console.log("Tree must have at least two node");
+            return null
+        }
+        let curr = this.root
+        let parent = null
+
+        while(curr.right){
+            parent = curr
+            curr = curr.right
+        }
+        if(curr.left){
+            let secondLargest = curr.left
+            while(secondLargest.right){
+                secondLargest = secondLargest.right
+            }
+            return secondLargest.value
+        }
+            
+        return parent.value
+    }
 }
 
 
@@ -185,6 +219,4 @@ console.log("---------------");
 bst.levelOrder()
 console.log(bst.findClosest(bst.root,16));
 console.log(bst.checkBST(bst.root));
-
-
-
+console.log("The second largest is : ",bst.secondLargest());
