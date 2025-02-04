@@ -1,45 +1,50 @@
-//Implementation of trie
-class TrieNode{
-    constructor(){
-        this.children = {}
-        this.isEndOFWord = false
+    //Implementation of trie
+    class TrieNode{
+        constructor(){
+            this.children = {}
+            this.isEndOFWord = false
+        }
     }
-}
 
-class Trie {
-    constructor(){
-        this.root = new TrieNode()
-    }
-    insert(word){
-        let node = this.root
-        for(let char of word){
-            if(!node.children[char]){
-                node.children[char] = new TrieNode()
+    class Trie {
+        constructor(){
+            this.root = new TrieNode()
+        }
+        insert(word){
+            let node = this.root
+            for(let char of word){
+                if(!node.children[char]){
+                    node.children[char] = new TrieNode()
+                }
+                node = node.children[char]
             }
-            node = node.children[char]
+            node.isEndOFWord = true
         }
-        node.isEndOFWord = true
-    }
-    search(word){
-        let node = this.root
-        for(let char of word){
-            if(!node.children[char]) return false
-            node = node.children[char]
+        search(word){
+            let node = this.root
+            for(let char of word){
+                if(!node.children[char]) return false
+                node = node.children[char]
+            }
+            return node.isEndOFWord
         }
-        return node.isEndOFWord
-    }
-    startsWith(prefix){
-        let node = this.root
-        for(let char of prefix){
-            if(!node.children[char]) return false
+        startsWith(prefix){
+            let node = this.root
+            for(let char of prefix){
+                if(!node.children[char]) return false
+            }
+            return true
         }
-        return true
     }
-}
 
-const trie = new Trie()
-trie.insert("cat")
-trie.insert("dog")
-console.log(trie.search("cat"));
-console.log(trie.search("car"));
+    const trie = new Trie()
+    trie.insert("cat")
+    trie.insert("dog")
+    console.log(trie.search("cat"));
+    console.log(trie.search("car"));
 
+
+
+
+
+    // ------------------------------------------------------------------

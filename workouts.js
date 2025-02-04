@@ -205,99 +205,136 @@ class BinaryTree{
 }
 
 
-class Node{
-    constructor(value){
-        this.value = value
-        this.right = null
-        this.left = null;
+// class Node{
+//     constructor(value){
+//         this.value = value
+//         this.right = null
+//         this.left = null;
 
-    }
-}
+//     }
+// }
 
-class BinarySearchTree{
+// class BinarySearchTree{
+//     constructor(){
+//         this.root = null
+//     }
+//     insert(value){
+//         const newNode = new Node(value)
+
+//         if(this.root === null ){
+//             this.root = null
+//             return
+//         }else{
+//             this.insertNode(this.root,newNode)
+//         }
+//     }
+//     insertNode(node,newNode){
+//         if(newNode.value < node.value){
+//             if(node.left === null ){
+//                 node.left = newNode
+//             }else{
+//                 this.insertNode(node.left,newNode)
+//             }
+//         }else{
+//             if(node.right === null ){
+//                 node.right = newNode
+//             }else{
+//                 this.insertNode(node.right,newNode)
+//             }
+//         }
+//     }
+//     preOrderTraversal(root){
+//         if(root){
+//             console.log(root.value);
+//             this.preOrderTraversal(root.left)
+//             this.preOrderTraversal(root.right)
+//         }
+//     }
+//     inOrderTraversal(root){
+//         if(root){
+//             this.preOrderTraversal(root.left)
+//             console.log(root.value);
+//             this.preOrderTraversal(root.right)
+//         }
+//     }
+//     pastOrderTraversal(root){
+//         if(root){
+//             this.preOrderTraversal(root.left)
+//             this.preOrderTraversal(root.right)
+//             console.log(root.value);
+//         }
+//     }
+//     levelOrder(){
+//         if(this.root === null ) return []
+//         let queue = [this.root]
+//         const result = []
+//         while(queue.length){
+//             const node = queue.shift()
+//             result.push(node.value)
+//             if(node.left !== null ) queue.push(node.left)
+//             if(node.right !== null ) queue.push(node.right)
+//         }
+//     return result
+//     }
+//     findClosest(root,target){
+//         let closest = root.value
+
+//         while(root !== null ){
+//             if(Math.abs(root.value - target) < Math.abs(closest-target))
+//                 closest = root.value
+//             if(target < root.value ){
+//                 root = root.left
+//             }else if(target > root.value ){
+//                 root = root.right
+//             }else{
+//                 break;
+//             }
+//         }
+//         return closest
+//     }
+//     checkBST(root, min = -Infinity,max = Infinity){
+//         if(root === null ) return true
+//         if(root.value <= min || root.value >= max ) return 
+
+//         return (
+//             this.checkBST(root.left,min,root.value) && this.checkBST(root.right,root.value,max)
+//         )
+//     }
+// }
+
+
+class TrieNode{
     constructor(){
-        this.root = null
-    }
-    insert(value){
-        const newNode = new Node(value)
-
-        if(this.root === null ){
-            this.root = null
-            return
-        }else{
-            this.insertNode(this.root,newNode)
-        }
-    }
-    insertNode(node,newNode){
-        if(newNode.value < node.value){
-            if(node.left === null ){
-                node.left = newNode
-            }else{
-                this.insertNode(node.left,newNode)
-            }
-        }else{
-            if(node.right === null ){
-                node.right = newNode
-            }else{
-                this.insertNode(node.right,newNode)
-            }
-        }
-    }
-    preOrderTraversal(root){
-        if(root){
-            console.log(root.value);
-            this.preOrderTraversal(root.left)
-            this.preOrderTraversal(root.right)
-        }
-    }
-    inOrderTraversal(root){
-        if(root){
-            this.preOrderTraversal(root.left)
-            console.log(root.value);
-            this.preOrderTraversal(root.right)
-        }
-    }
-    pastOrderTraversal(root){
-        if(root){
-            this.preOrderTraversal(root.left)
-            this.preOrderTraversal(root.right)
-            console.log(root.value);
-        }
-    }
-    levelOrder(){
-        if(this.root === null ) return []
-        let queue = [this.root]
-        const result = []
-        while(queue.length){
-            const node = queue.shift()
-            result.push(node.value)
-            if(node.left !== null ) queue.push(node.left)
-            if(node.right !== null ) queue.push(node.right)
-        }
-    return result
-    }
-    findClosest(root,target){
-        let closest = root.value
-
-        while(root !== null ){
-            if(Math.abs(root.value - target) < Math.abs(closest-target))
-                closest = root.value
-            if(target < root.value ){
-                root = root.left
-            }else if(target > root.value ){
-                root = root.right
-            }else{
-                break;
-            }
-        }
-        return closest
-    }
-    checkBST(root, min = -Infinity,max = Infinity){
-        if(root === null ) return true
-        if(root.value <= min || root.value >= max ) return 
-
-        return (
-            this.checkBST(root.left,min,root.value) && this.checkBST(root.right,root.value,max)
-        )
+        this.children = {}
+        this.isEndOfWord = false
     }
 }
+
+class Trie{
+    constructor(){
+        this.root = new TrieNode()
+    }
+    insert(word){
+        let node =this.root
+        for(let i of word){
+            if(!node.children[i]){
+                node.children[i] = new TrieNode()
+            }
+            node = node.children[i]
+        }
+        node.isEndOfWord  = true
+    }
+    search(word){
+        let node = this.root
+        for(let char of word){
+            if(!node.children[char]) return false
+            node = node.children[char]
+        }
+        return node.isEndOFWord
+    }
+}
+
+const trie = new Trie()
+trie.insert("Hellooo")
+console.log(trie.root);
+console.log(trie.search("hel"));

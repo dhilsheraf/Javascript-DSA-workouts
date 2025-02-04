@@ -1,47 +1,39 @@
 function heapify(arr, n, i) {
-    let largest = i;       // Root node
-    let left = 2 * i + 1;  // Left child index
-    let right = 2 * i + 2; // Right child index
+    let largest = i;
+    let left = 2 * i + 1;
+    let right = 2 * i + 2;
 
-    // If left child is larger than root
     if (left < n && arr[left] > arr[largest]) {
+        console.log(largest,left);
         largest = left;
     }
 
-    // If right child is larger than the current largest
     if (right < n && arr[right] > arr[largest]) {
+        console.log(right,largest);
         largest = right;
     }
 
-    // If the largest is not the root, swap and heapify
     if (largest !== i) {
-        [arr[i], arr[largest]] = [arr[largest], arr[i]]; // Swap
-        heapify(arr, n, largest); // Recursively heapify
+        [arr[i], arr[largest]] = [arr[largest], arr[i]];
+        heapify(arr, n, largest);
     }
 }
 
 function heapSort(arr) {
-    const n = arr.length;
+    let n = arr.length;
 
-    // Step 1: Build a max-heap
+    // Build max heap
     for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
         heapify(arr, n, i);
     }
 
-    // Step 2: Extract elements from heap one by one
+    // Extract elements from heap
     for (let i = n - 1; i > 0; i--) {
-        // Move current root to the end
-        [arr[0], arr[i]] = [arr[i], arr[0]];
-
-        // Call heapify on the reduced heap
-        heapify(arr, i, 0);
+        [arr[0], arr[i]] = [arr[i], arr[0]]; // Swap root with last element
+        heapify(arr, i, 0); // Heapify the reduced heap
     }
-    return arr;
 }
 
-// Example Usage
-const arr = [4, 10, 3, 5, 1];
-console.log("Original array:", arr);
-
-const sortedArr = heapSort(arr);
-console.log("Sorted array:", sortedArr);
+let arr = [12, 11, 13, 5, 6, 7];
+heapSort(arr);
+console.log("Sorted array:", arr);

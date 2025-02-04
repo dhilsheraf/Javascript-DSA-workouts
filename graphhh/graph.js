@@ -62,5 +62,6 @@ graph.addEdge("B","C")
 graph.display()
 console.log(graph.hasEdge("A","C"));
 // graph.removeEdge("A","B")
-graph.removeVertex("A","B")
+// graph.removeVertex("A","B")
 graph.display()
+console.log(graph.adjacencyList);

@@ -127,8 +127,8 @@ class BinarySearchTree {
             }
             if (!root.left) {
                 return root.right
-
-            } else if (!root.right) {
+            }
+            else if (!root.right) {
                 return root.left
             }
             root.value = this.min(root.right)
@@ -183,6 +183,13 @@ class BinarySearchTree {
             
         return parent.value
     }
+    height(node){
+        if(node === null ) return -1 
+        let left = this.height(node.left)
+        let right = this.height(node.right)
+
+        return Math.max(left,right) +1
+    }
 }
 
 
@@ -212,11 +219,14 @@ bst.insert(10)
 bst.insert(5)
 bst.insert(15)
 bst.insert(3)
-
-bst.levelOrder()
+bst.insert(12)
+bst.insert(17)
+bst.inOrder(bst.root)
+console.log(bst.height(bst.root))
+// bst.levelOrder()
 // bst.delete(15)
-console.log("---------------");
-bst.levelOrder()
-console.log(bst.findClosest(bst.root,16));
-console.log(bst.checkBST(bst.root));
-console.log("The second largest is : ",bst.secondLargest());
+// console.log("---------------");
+// bst.levelOrder()
+// console.log(bst.findClosest(bst.root,16));
+// console.log(bst.checkBST(bst.root));
+// console.log("The second largest is : ",bst.secondLargest());

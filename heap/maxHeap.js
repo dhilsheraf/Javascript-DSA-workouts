@@ -1,14 +1,30 @@
 class MaxHeap {
-    constructor() {
+    constructor(arr = []) {
         this.heap = [];
+        if (arr.length > 0) {
+            this.buildHeap(arr);
+        }
     }
 
-    getParentIndex(i) { return Math.floor((i - 1) / 2); }
-    getLeftChildIndex(i) { return 2 * i + 1; }
-    getRightChildIndex(i) { return 2 * i + 2; }
+    getParentIndex(i) { 
+        return Math.floor((i - 1) / 2); }
+
+    getLeftChildIndex(i) {
+         return 2 * i + 1; }
+         
+    getRightChildIndex(i) {
+         return 2 * i + 2; }
 
     swap(i, j) {
         [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]];
+    }
+
+    // Build Heap from an array (O(N))
+    buildHeap(arr) {
+        this.heap = arr;
+        for (let i = Math.floor(arr.length / 2); i >= 0; i--) {
+            this.heapifyDown(i);
+        }
     }
 
     insert(value) {
@@ -53,13 +69,12 @@ class MaxHeap {
     }
 }
 
-// Test Max Heap
-const maxHeap = new MaxHeap();
-maxHeap.insert(10);
-maxHeap.insert(5);
-maxHeap.insert(20);
-maxHeap.insert(30);
+// Example Usage
+const maxHeap = new MaxHeap([10, 5, 20, 30, 15]);
+console.log("Max Heap:", maxHeap.heap);  // Output: Max Heap: [30, 15, 20, 5, 10]
 
-console.log("Max Heap:", maxHeap.heap); // Output: [30, 10, 20, 5]
-console.log("Removed:", maxHeap.remove()); // Output: 30
-console.log("After Removal:", maxHeap.heap); // Output: [20, 10, 5]
+maxHeap.insert(40);
+console.log("After Inserting 40:", maxHeap.heap);  // Output: [40, 30, 20, 15, 10, 5]
+
+console.log("Removed Max:", maxHeap.remove());  // Output: 40
+console.log("After Removal:", maxHeap.heap);  // Output: [30, 15, 20, 5, 10]
