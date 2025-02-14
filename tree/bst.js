@@ -68,6 +68,7 @@ class BinarySearchTree {
             this.postOrder(root.right)
             console.log(root.value);
         }
+
     }
     levelOrder() {
         //the optimized queue
@@ -84,6 +85,7 @@ class BinarySearchTree {
             }
         }
     }
+    
     // levelOrder(){
     //     if(this.root === null ) return []
     //     let queue = [this.root]
@@ -188,6 +190,17 @@ class BinarySearchTree {
         let left = this.height(node.left)
         let right = this.height(node.right)
 
+        return Math.max(left,right) +1
+    }
+    findLeaf(node){
+        if(!node) return []
+        if(!node.right && !node.left) return [node.value]
+        return [...this.findLeaf(node.right),...this.findLeaf(node.right)]
+    }
+    height(node){
+        if(node === null ) return -1
+        let left = this.height(node.left)
+        let right = this.height(node.right)
         return Math.max(left,right) +1
     }
 }

@@ -102,6 +102,7 @@ class Triee {
         }
         return node.isEndOfWord
     }
+
     startswith(prefix) {
         let node = this.root
         for (let char of prefix) {
@@ -111,6 +112,7 @@ class Triee {
         return true
 
     }
+    
 
     searchPrefix(prefix){
         let node = this.root
@@ -129,6 +131,7 @@ class Triee {
     }
     return words
     }
+
 
 }
 

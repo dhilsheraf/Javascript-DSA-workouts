@@ -1,110 +1,153 @@
-class BNode{
-    constructor(value){
-        this.value = value
-        this.left = null
-        this.right = null
-    }
-}
-
-class BinarySearchTree{
+class Graph{
     constructor(){
-        this.root = null
+        this.adjacencyList = {}
     }
-
-    insert(value){
-        const newNode = new  BNode(value)
-        if(this.root == null ) {
-            this.root = newNode
-        }else{
-            this.insertNode(this.root,newNode)
+    addVertex(vertex){
+        if(!this.adjacencyList[vertex])
+            this.adjacencyList[vertex] = new Set()
+    }
+    addEdge(vertex1,vertex2){
+        if(!this.adjacencyList[vertex1])
+            this.addVertex(vertex1)
+        if(!this.adjacencyList[vertex2])
+            this.addVertex(vertex2)
+        this.adjacencyList[vertex1].add(vertex2)
+        this.adjacencyList[vertex2].add(vertex1)
+    }
+    hasEdge(vertex1,vertex2){
+        return(
+            this.adjacencyList[vertex1].has(vertex2)
+            && this.adjacencyList[vertex2].has(vertex1)
+        )
+    }
+    removeEdge(vertex1,vertex2){
+        this.adjacencyList[vertex1].delete(vertex2)
+        this.adjacencyList[vertex2].delete(vertex1)
+    }
+    removeVertex(vertex){
+        if(!this.adjacencyList[vertex]) return
+        for(let adjacentVertex of this.adjacencyList[vertex]){
+            this.removeEdge(vertex,adjacentVertex)
         }
+        delete this.adjacencyList[vertex]
     }
-
-    insertNode(node,newNode){
-        if( newNode.value < node.value ){
-            if(node.left === null ) {
-                node.left = newNode
-            }else{
-                this.insertNode(node.left,newNode)
-            }
-        }else{
-            if(node.right === null ) {
-                node.right = newNode
-            }else{
-                this.insertNode(node.right,newNode)
-            }
-        }
-    }
-
-    search(node,value){
-        if(!node) return false
-
-        if(node.value === value ) return true
-        if(node.value > value ) return this.search(node.left,value)
-        return this.search(node.right,value)
-    }
-
-    preOrderTraversal(root){
-        if(root === null ) return
-        console.log(root.value);
-        this.preOrderTraversal(root.left)
-        this.preOrderTraversal(root.right)
-    }
-    kthelement(root,k){
-        const result = []
-        function inorder(root){
-            if(root === null ) return
+    display(){
+        for(let vertex in this.adjacencyList){
+            console.log(vertex , '->' + [...this.adjacencyList[vertex]] );
             
-            inorder(root.left)
-            result.push(root.value)
-            inorder(root.right)
-        }
-        inorder(root)
-        console.log(result)
-        return result[k-1]
-    }
-    delete(value){
-        this.root = this.deleteNode(this.root, value)
-    }
-    deleteNode(root,value){
-        if(root === null ) return root
-        if(value < root.value) 
-            root.left = this.deleteNode(root.left,value)
-        else if(value > root.value )
-            root.right = this.deleteNode(root.right,value)
-        else{
-            if(!root.left && !root.right){
-                return null
-            } 
-            if(!root.left){
-                return root.right
-            }
-            else if(!root.right){
-                return root.left
-            }
-            root.value = this.min(root.right)
-            root.right = this.deleteNode(root.right,root.value)
-        }
-        return root
-    }
-    min(node){
-        if(!node.left ) return node.value 
-        else {
-            return this.min(node.left)
         }
     }
-    height(){
-        if(node = null)
+    
+}
+
+const graph = new Graph()
+
+
+graph.addVertex(1)
+graph.addVertex(2)
+graph.addVertex(3)
+graph.addVertex(4)
+graph.addVertex(5)
+graph.addVertex(6)
+graph.addVertex(7)
+graph.addEdge(1,2)
+graph.addEdge(2,3)
+graph.addEdge(5,2)
+graph.addEdge(4,5)
+
+graph.display()
+
+function heapify(arr,n,i){
+    let largest = i
+    let left = i * 2 +1
+    let right = i * 2 + 2
+    if(left < n && arr[left] > arr[largest])
+        largest = left
+    if(right < n && arr[right] > arr[largest] )
+        largest = right
+    if(largest !== i ){
+        [arr[largest],arr[i]] = [arr[i],arr[largest]]
+        heapify(arr,n,largest)
     }
 }
 
-const BST = new BinarySearchTree()
+function heapsort(arr){
+    let n = arr.length
 
-BST.insert(10)
-BST.insert(8)
-BST.insert(14)
-BST.insert(18)
-BST.insert(5)
+    for(let i = Math.floor(n/2)-1 ; i >= 0 ; i-- ){
+        heapify(arr,n,i)
+    }
+    for(let i = n-1 ; i >= 0 ; i-- ){
+        [arr[0],arr[i]] = [arr[i],arr[0]]
+        heapify(arr,i,0)
+    }
+    return arr
+}
 
-BST.preOrderTraversal(BST.root)
-console.log(BST.kthelement(BST.root,1))
+console.log(heapsort([1,10,5,1,2,8,5,2,4,11,2,414,124,1231,321]))
+
+class Trienode{
+    constructor(){
+        this.children = {}
+        this.isEndOfWord = false
+    }
+}
+
+
+class Trie{
+    constructor(){
+        this.root = new Trienode()
+    }
+    insert(word){
+        let node = this.root
+        for(let char of word ){
+            if(!node.children[char])
+                node.children[char] = new Trienode()
+            node = node.children[char]
+        }
+        node.isEndOfWord = true
+    
+    }
+    search(word){
+        let node = this.root
+        for(let char of word){
+            if(!node.children[char])
+                return false
+            node = node.children[char]
+        }
+        return node.isEndOfWord
+    }
+    searchPrefix(prefix){
+        let node = this.root
+        for(let char of prefix){
+            if(!node.children[char])
+                return []
+            node = node.children[char]
+        }
+        return this.getWords(node,prefix)
+    }
+    getWords(node,prefix){
+        let words = []
+        if(node.isEndOfWord){
+            words.push(prefix)
+        }
+        for(let char in node.children){
+            words = words.concat(this.getWords(node.children[char],prefix+char))
+        }
+        return words
+    }
+}
+
+console.log("trieeeeee look at this");
+
+
+let trie = new Trie();
+trie.insert("apple");
+trie.insert("app");
+trie.insert("apricot");
+trie.insert("banana");
+trie.insert("bat");
+
+
+console.log(trie.searchPrefix("a"))
+console.log(trie.searchPrefix("b"));

@@ -1,5 +1,3 @@
-//AVL tree Adelson-Velsky and Landis tree is a self balancing tree
-
 class Node {
     constructor(value){
         this.value = value
