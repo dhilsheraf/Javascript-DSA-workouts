@@ -123,6 +123,12 @@ class BinaryTree {
             isMirror(left.right, right.left) // Inner subtrees must mirror
         );
     }
+    height(node){
+        if(node ==null) return -1
+        let left = this.height(node.left)
+        let right = this.height(node.right)
+        return Math.max(left,right) +1
+    }
 }
 
 const tree = new BinaryTree()

@@ -13,7 +13,7 @@ class AVLtree{
         this.root =null;
     }
     getHeight(node){
-        this.node ? this.node.height : 0
+        return node ? this.node.height : 0
     }
     getBalanceFactor(node){
         return node ? this.getHeight(node.left) - this.getHeight(node.right):0

@@ -203,6 +203,33 @@ class BinarySearchTree {
         let right = this.height(node.right)
         return Math.max(left,right) +1
     }
+    same(root1,root2){
+        if(!root1 && !root2)  return true
+        if(!root1 || !root2 ) return false
+
+
+        return(
+            root1.value === root2.value
+            && this.same(root1.left,root2.left) &&
+            this.same(root1.right ,root2.right)
+        )
+    }
+    getRoot(root1,value){
+        
+        if(root1.value === value) return root1
+        if(!root1) return null
+        this.getRoot(root1.left)
+        this.getRoot(root1.right)
+    }
+    isSubtree(root1,root2){
+        console.log(root1)
+        let orgRoot1 = this.getRoot(root1,root2.value)
+        
+        return console.log(orgRoot1.value)
+    }
+// travel throgu 1 first tree and find root of second tree then need to travel through both tree and compare the node and value if ith shoe
+// it is same we can stop traversal when the subtree is ended so we can return true 
+//
 }
 
 
@@ -243,3 +270,16 @@ console.log(bst.height(bst.root))
 // console.log(bst.findClosest(bst.root,16));
 // console.log(bst.checkBST(bst.root));
 // console.log("The second largest is : ",bst.secondLargest());
+
+
+const bst1 = new BinarySearchTree()
+
+
+bst1.insert(3)
+bst1.insert(12)
+bst1.insert(16)
+
+console.log(bst.same(bst.root,bst1.root))
+
+bst.isSubtree(bst.root,bst1.root)
+

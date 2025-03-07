@@ -100,6 +100,7 @@ class Graph {
 
         let queue = [[start]]
         let visited = new Set()
+        visited.add(start)
         while(queue.length){
             let path = queue.shift()
             let node = path[path.length-1]
@@ -140,6 +141,7 @@ graph.display();
 console.log("Adjacency List:", graph.adjacencyList);
 console.log("Bfs of graph")
 graph.bfs("A")
+
 console.log("DFS of graph")
 graph.dfs("A")
 
